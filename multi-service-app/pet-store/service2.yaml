@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pet-store-2
+  namespace: pets-app
+spec:
+  type: ClusterIP
+  selector:
+    app: pet-store
+    store: "2"
+  ports:
+    - port: 5001
+      targetPort: 5001

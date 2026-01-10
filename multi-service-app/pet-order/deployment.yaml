@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pet-order
+  namespace: pets-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pet-order
+  template:
+    metadata:
+      labels:
+        app: pet-order
+    spec:
+      containers:
+        - name: pet-order
+          image: pet-order:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5003
+          env:
+            - name: MONGO_URI
+              value: "mongodb://database:27017/"
+            - name: PET_STORE1_URL
+              value: "http://pet-store-1:5001"
+            - name: PET_STORE2_URL
+              value: "http://pet-store-2:5001"
+            - name: PORT
+              value: "5003"

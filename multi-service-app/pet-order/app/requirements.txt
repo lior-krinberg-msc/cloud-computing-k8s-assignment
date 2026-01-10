@@ -1,0 +1,4 @@
+Flask
+requests
+pymongo>=4.0
+

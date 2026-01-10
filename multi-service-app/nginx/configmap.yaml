@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: pets-app
+data:
+  nginx.conf: |
+    events {}
+
+    http {
+        server {
+            listen 80;
+
+            location /pet-types1 {
+                proxy_pass http://pet-store-1:5001/pet-types;
+            }
+
+            location /pet-types2 {
+                proxy_pass http://pet-store-2:5001/pet-types;
+            }
+
+            location /purchases {
+                proxy_pass http://pet-order:5003/purchases;
+            }
+
+            location /transactions {
+                proxy_pass http://pet-order:5003/transactions;
+                proxy_set_header OwnerPC $http_ownerpc;
+            }
+
+            location / {
+                return 403;
+            }
+        }
+    }
