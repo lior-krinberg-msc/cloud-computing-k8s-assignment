@@ -9,14 +9,30 @@ data:
 
     http {
         server {
-            listen 80;
+            listen 80; 
 
-            location /pet-types1 {
+            # pet-store 1
+            location = /pet-types1 {
                 proxy_pass http://pet-store-1:5001/pet-types;
             }
+            location /pet-types1/ {
+                proxy_pass http://pet-store-1:5001/pet-types/;
+            }
 
-            location /pet-types2 {
+            # pet-store 2
+            location = /pet-types2 {
                 proxy_pass http://pet-store-2:5001/pet-types;
+            }
+            location /pet-types2/ {
+                proxy_pass http://pet-store-2:5001/pet-types/;
+            }
+
+            # pictures routing
+            location /pictures1/ {
+                proxy_pass http://pet-store-1:5001/pictures/;
+            }
+            location /pictures2/ {
+                proxy_pass http://pet-store-2:5001/pictures/;
             }
 
             location /purchases {
